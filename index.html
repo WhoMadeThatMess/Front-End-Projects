@@ -1,155 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FinSight | Personal Budgeting (Beta Build)</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Lyric Guesser</title>
 </head>
 <body>
-  <!-- Sidebar Navigation -->
-  <button class="hamburger" id="menuToggleBtn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
-  <aside class="sidebar" aria-label="Main navigation">
-    <h1 class="logo"><i class="fa-solid fa-coins"></i> FinSight</h1>
-    <nav class="nav-menu">
-<div class="menu-overlay" id="menuOverlay"></div>
-      <button id="dashboard-btn"><i class="fa-solid fa-chart-line"></i> Dashboard</button>
-      <button id="export-pdf"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
-      <button id="user-profile"><i class="fa-solid fa-user"></i> Profile</button>
-      <button id="log-out"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
-      <div class="nav-seperation"></div>
-      <div class="lower">
-        <button id="help-btn" onclick="showHelpPanel"><i class="fa-solid fa-circle-info"></i> Help</button>
-        <!--opens mini settings panel -->
-        <button id="settings-btn" onclick="openSettingsPanel()"><i class="fa-solid fa-gear"></i> Settings</button>
-        <div id="settingsPanel" class="settings-panel" style="display: none;" aria-label="Settings panel">
-          <button class="close" onclick="closeSettingsPanel()" aria-label="Close settings panel">&times;</button>
-          <h3>Settings</h3>
-          <label for="notificationsToggle">Enable Notifications</label>
-            <input type="checkbox" id="notificationsToggle" />
-          <label for="dataSyncToggle">Enable Data Sync</label>
-            <input type="checkbox" id="dataSyncToggle" />
-          <label for="ai-insights">Enable AI Insights</label>
-            <input type="checkbox" id="ai-insights" />
-          <label for="languageSelect">Language</label>
-            <select id="languageSelect">
-              <option value="en">English</option>
-              <option value="es">Spanish</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-              <option value="zh">Chinese</option>
-            </select>
-          <label for="currencySelect">Currency</label>
-            <select id="currencySelect">
-              <!--top 10 strongest currencies-->
-              <option value="USD">USD - US Dollar</option>
-              <option value="EUR">EUR - Euro</option>
-              <option value="GBP">GBP - British Pound</option>
-              <option value="JPY">JPY - Japanese Yen</option>
-              <option value="CHF">CHF - Swiss Franc</option>
-              <option value="CAD">CAD - Canadian Dollar</option>
-              <option value="AUD">AUD - Australian Dollar</option>
-              <option value="CNY">CNY - Chinese Yuan</option>
-              <option value="SEK">SEK - Swedish Krona</option>
-              <option value="NZD">NZD - New Zealand Dollar</option>
-            </select>
-          <label for="toggleDarkMode">Enable Dark Mode</label>
-            <button id="toggle-dark"><i class="fa-solid fa-moon"></i> Dark Mode</button>
-          <button id="saveSettingsBtn">Save Settings</button>
-        </div>
-      </div>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="dashboard">
-    <header class="summary-header">
-      <section class="summary">
-        <article class="card"><h2>Income</h2><p id="totalIncome">$0.00</p></article>
-        <article class="card"><h2>Expenses</h2><p id="totalExpenses">$0.00</p></article>
-        <article class="card"><h2>Balance</h2><p id="balance">$0.00</p></article>
-      </section>
-    </header>
-
-    <section class="form-section" aria-label="Add transaction">
-      <form id="transactionForm">
-        <input type="text" id="desc" placeholder="Description" required />
-        <input type="number" id="amount" placeholder="Amount" required />
-        <select id="type">
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-        <select id="category">
-          <option value="General">General</option>
-          <option value="Food">Food</option>
-          <option value="Transport">Transport</option>
-          <option value="Bills">Bills</option>
-          <option value="Entertainment">Entertainment</option>
-        </select>
-        <button type="submit" id="add-btn"><i class="fa-solid fa-circle-plus"></i> Add</button>
-      </form>
-    </section>
-
-    <section class="table-section" aria-label="Transaction table">
-      <div class="table-controls">
-        <button id="saveTableLocalStorage"><abbr title="Save to localStorage"><i class="fa-solid fa-floppy-disk"></i></abbr></button>
-        <button id="saveAsExcel"><abbr title="Save as Excel"><i class="fa-solid fa-file-excel"></i></abbr></button>
-        <button id="importFromLocalStorage"><abbr title="Import From localStorage"><i class="fa-solid fa-file-import"></i></abbr></button>
-        <button onclick="openSharePanel()"><abbr title="Share Table"><i class="fa-solid fa-share-nodes"></i></abbr></button>
-			<div class="verticle-border"></div>
-			<div class="table-controls-right">
-			<input type="file" id="importFromExcel" accept=".xlx, .csv"> <button class="import-btn" onclick="importFile">Import</button>
+    <div class="container">
+        <h1>Lyric Guesser</h1>
+        <div id="game-area">
+            <p id="lyric-display">Loading lyric...</p>
+            <input type="text" id="guess-input" placeholder="Enter your guess here">
+            <button id="submit-guess">Submit Guess</button>
+            <div id="button-choices">
+			<button id="option"></button>
+			<button id="option"></button>
+			<button id="option"></button>
+			<button id="option"></button>
 			</div>
-      </div>
-      <table id="expenseDisplay">
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-
-    <section class="chart-section" aria-label="Spending breakdown">
-      <h2>Spending Breakdown</h2>
-      <div class="chart-container">
-        <canvas id="spendingChart" aria-label="Donut chart of expenses" role="img"></canvas>
-      </div>
-      <div class="ai-insight">
-        <h3>AI Insight</h3>
-        <p id="ai-insight">Add data to generate insights.</p>
-      </div>
-    </section>
-
-    <section id="sharePanel" class="share-panel" aria-label="Share table">
-      <div class="content">
-        <button class="close" onclick="closeSharePanel()" aria-label="Close share panel">&times;</button>
-        <h3>Share Table</h3>
-        <textarea id="tableShareText" rows="6" readonly></textarea>
-        <button onclick="copyTableToClipboard()">Copy</button>
-      </div>
-    </section>
-
-    <footer>
-      <p>&copy; 2023–2025 Angel Garcia. All rights reserved.</p>
-    </footer>
-  </main>
-
-  <!-- Scripts -->
-  <!--js libraries-->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-  <!--main js files-->
-  <script src="script.js"></script>
-  <script src="ai-insight.js"></script>
-  <script src="chart.js"></script>
+            <button id="next-lyric" style="display:none;">Next Lyric</button>
+        </div>
+    </div>
+    <script src="javascript.js"></script>
 </body>
 </html>
